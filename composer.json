@@ -1,0 +1,22 @@
+{
+    "name": "gslj/think-mongo-extend",
+    "description": "mongodb driver extend for thinkphp5",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "guoshuai",
+            "email": "gs19951211@gmail.com"
+        }
+    ],
+    "require": {
+		"topthink/framework": "~5.1.20",
+		"topthink/think-mongo": "2.0.*"
+    },
+    "autoload": {
+        "psr-4": {
+            "gslj\\mongo\\": "src"
+        },
+        "files": [
+        ]
+    }
+}
