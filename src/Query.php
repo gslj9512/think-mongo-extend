@@ -50,6 +50,17 @@ class Query extends BaseQuery
     }
 
     /**
+     * 删除当前集合
+     * @return mixed
+     */
+    public function drop(){
+        $cmd = [
+            'drop'=>$this->getTable()
+        ];
+        return $this->command(new Command($cmd));
+    }
+
+    /**
      * 直接执行Command指令
      * @param $pipeline
      * @return mixed
