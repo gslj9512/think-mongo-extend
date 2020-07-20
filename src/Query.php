@@ -79,7 +79,8 @@ class Query extends BaseQuery
             ]
         ];
         $unwind = [
-            '$unwind' => '$' . $join
+            '$unwind' => '$' . $join,
+            "preserveNullAndEmptyArrays" => true
         ];
         $addFields = [
             '$addFields' => [
