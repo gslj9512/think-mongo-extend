@@ -53,9 +53,25 @@ class Query extends BaseQuery
      * 删除当前集合
      * @return mixed
      */
-    public function drop(){
+    public function drop()
+    {
         $cmd = [
-            'drop'=>$this->getTable()
+            'drop' => $this->getTable()
+        ];
+        return $this->command(new Command($cmd));
+    }
+
+    /**
+     * 重命名集合
+     * @param $name
+     * @return mixed
+     */
+    public function rename($name)
+    {
+        //todo 需要重新建立索引
+        $cmd = [
+            'renameCollection' => $this->getConfig('database') . '.' . $this->getTable(),
+            'to' => $this->getConfig('database') . '.' . $name
         ];
         return $this->command(new Command($cmd));
     }
@@ -90,8 +106,10 @@ class Query extends BaseQuery
             ]
         ];
         $unwind = [
-            '$unwind' => '$' . $join,
-            "preserveNullAndEmptyArrays" => true
+            '$unwind' => [
+                'path' => '$' . $join,
+                "preserveNullAndEmptyArrays" => true
+            ]
         ];
         $addFields = [
             '$addFields' => [
