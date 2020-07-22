@@ -102,18 +102,18 @@ class Query extends BaseQuery
                 'from' => $join,
                 'localField' => $condition_array[0],
                 'foreignField' => '_id',
-                'as' => $join
+                'as' => $join . '_' . $condition_array[0]
             ]
         ];
         $unwind = [
             '$unwind' => [
-                'path' => '$' . $join,
+                'path' => '$' . $join . '_' . $condition_array[0],
                 "preserveNullAndEmptyArrays" => true
             ]
         ];
         $addFields = [
             '$addFields' => [
-                $condition_array[0] => '$' . $join . '.' . $condition_array[1]
+                $condition_array[0] => '$' . $join . '_' . $condition_array[0] . '.' . $condition_array[1]
             ],
         ];
         $this->pipeline[] = $look_up;
