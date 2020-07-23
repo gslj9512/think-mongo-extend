@@ -78,6 +78,14 @@ class Connection extends BaseConnection
                 $datum['id'] = $datum['_id']->__toString();
                 unset($datum['_id']);
             }
+
+            if (is_array($datum)){
+                foreach ($datum as $index => &$item) {
+                    if (is_object($item)){
+                        $item = $item->__toString();
+                    }
+                }
+            }
         }
     }
 }
