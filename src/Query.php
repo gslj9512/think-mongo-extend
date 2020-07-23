@@ -102,23 +102,32 @@ class Query extends BaseQuery
                 'from' => $join,
                 'localField' => $condition_array[0],
                 'foreignField' => '_id',
-                'as' => $join . '_' . $condition_array[0]
+                'as' => $condition_array[0] . '_join'
             ]
         ];
         $unwind = [
             '$unwind' => [
-                'path' => '$' . $join . '_' . $condition_array[0],
+                'path' => '$' . $condition_array[0] . '_join',
                 "preserveNullAndEmptyArrays" => true
             ]
         ];
         $addFields = [
             '$addFields' => [
-                $condition_array[0] => '$' . $join . '_' . $condition_array[0] . '.' . $condition_array[1]
+                $condition_array[0] => [
+                    'name' => '$' . $condition_array[0] . '_join.' . $condition_array[1],
+                    'id' => '$' . $condition_array[0] . '_join._id'
+                ],
             ],
+        ];
+        $project = [
+            '$project' => [
+                $condition_array[0] . '_join' => 0
+            ]
         ];
         $this->pipeline[] = $look_up;
         $this->pipeline[] = $unwind;
         $this->pipeline[] = $addFields;
+        $this->pipeline[] = $project;
         return $this;
     }
 }
